@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta name="description" content="{% block description %}{% endblock description %]"/>
+    <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
+    <form method="post">
+        {% if current_path %}
+            <img src="{{ url_for('static', filename='icons/folder.png') }}" alt="Folder">
+            <a href="{{ url_for('index', req_path='/'.join(current_path.split('/')[:-1])) }}">..</a>
+        {% endif %}
+        <ul>
+            {% for file in files %}
+            <li>
+                <input type="checkbox" name="selected_files" value="{{ file }}">
+                    {% if '.' in file %}
+                        <img src="{{ url_for('static', filename='icons/file.png') }}" alt="File">
+                        <a href="{{ url_for('index', req_path=current_path + '/' + file) }}">{{ file }}</a>
+                    {% else %}
+                        <img src="{{ url_for('static', filename='icons/folder.png') }}" alt="Folder">
+                        <a href="{{ url_for('index', req_path=current_path + '/' + file) }}">{{ file }}/</a>
+                    {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
 
+
+    </form>
 </body>
 </html>
