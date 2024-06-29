@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Przeglądarka plików</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
     <h1>Przeglądarka plików i katalogów</h1>
@@ -15,6 +16,10 @@
         <input type="text" id="new_dir_name" name="new_dir_name" required>
         <button type="submit">Utwórz katalog</button>
     </form>
+
+    <div id="drop-area">
+        <p>Przeciągnij i upuść pliki tutaj</p>
+    </div>
 
     <form method="post">
         <ul>

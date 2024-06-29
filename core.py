@@ -34,6 +34,17 @@ def index(req_path):
                 print(e)
         return redirect(url_for('index', req_path=req_path))
 
+    # Przesyłanie plików
+    if request.method == 'POST' and 'file' in request.files:
+        files = request.files.getlist('file')
+        for file in files:
+            if file:
+                file_path = os.path.join(absolute_path, file.filename)
+                try:
+                    file.save(file_path)
+                except Exception as e:
+                    flash(f"Nie udało się przesłać pliku: {str(e)}", 'error')
+        return redirect(url_for('index', req_path=req_path))
 
     # renderowanie widoku
     return render_template('index.html', files=files, current_path=req_path)
