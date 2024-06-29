@@ -35,7 +35,7 @@ def index(req_path):
         return redirect(url_for('index', req_path=req_path))
 
     # Przesyłanie plików
-    if request.method == 'POST' and 'file' in request.files:
+    if request.method == 'POST' and 'file' in request.form:
         files = request.files.getlist('file')
         for file in files:
             if file:
@@ -45,6 +45,21 @@ def index(req_path):
                 except Exception as e:
                     flash(f"Nie udało się przesłać pliku: {str(e)}", 'error')
         return redirect(url_for('index', req_path=req_path))
+
+    # Pobieranie plików
+    if request.method == 'POST' and 'download_files' in request.form:
+        selected_files = request.files.getlist('download_files')
+        if selected_files:
+            memory_file = io.BytesIO()
+            with zipfile.ZipFile(memory_file, 'w') as zf:
+                for file_name in selected_files:
+                    file_path = os.path.join(absolute_path,file_name)
+                    zf.write(file_path, os.path.basename(file_path))
+            memory_file.seek(0)
+            return send_file(memory_file, mimetype='application/zip',
+                             as_attachment=True,
+                             download_name='packed_file.zip')
+
 
     # renderowanie widoku
     return render_template('index.html', files=files, current_path=req_path)
