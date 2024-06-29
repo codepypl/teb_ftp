@@ -1,3 +1,5 @@
+import shutil
+
 from flask import Flask, render_template, request, redirect, url_for, abort, send_file, flash
 import os
 import zipfile
@@ -58,14 +60,17 @@ def index(req_path):
             memory_file.seek(0)
             return send_file(memory_file, download_name='files.zip', as_attachment=True)
 
-    # Usuwanie zaznaczonych plikó
+    # Usuwanie zaznaczonych plików
     if request.method == 'POST' and 'delete_files' in request.form:
         selected_files = request.form.getlist('selected_files')
         if selected_files:
             for file_name in selected_files:
                 file_path = os.path.join(absolute_path, file_name)
                 try:
-                    os.remove(file_path)
+                    if os.path.isfile(file_path):
+                        os.remove(file_path)
+                    elif os.path.isdir(file_path):
+                        shutil.rmtree(file_path)
                 except Exception as e:
                     flash(f"Nie udało się usunąć pliku: {str(e)}", 'error')
             return redirect(url_for('index', req_path=req_path))
