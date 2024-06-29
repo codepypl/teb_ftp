@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = 'Das5ahec#23a'
 
 
-BASE_PATH = ''  # ZMIEŃ , podaj ścieżkę do folderu systemowego, który skrypt będzie przeglądać
+BASE_PATH = '/Users/shadi/Desktop/ftp'  # ZMIEŃ, podaj ścieżkę do folderu systemowego, który skrypt będzie przeglądać
 
 
 @app.route('/', defaults={'req_path': ''}, methods=['GET', 'POST'])
@@ -19,6 +19,12 @@ def index(req_path):
     # Sprawdzamy, czy dana ścieżka istnieje
     if not os.path.exists(absolute_path):
         return abort(404)
+
+    # Listowanie katalogu
+    files = os.listdir(absolute_path)
+
+    # renderowanie widoku
+    return render_template('index.html', files=files, current_path=req_path)
 
 
 if __name__ == '__main__':
