@@ -11,6 +11,12 @@
     <h2>Aktualna ścieżka: {{ current_path or '/' }}</h2>
 
     <form method="post">
+        <label for="new_dir_name">Nazwa nowego katalogu</label>
+        <input type="text" id="new_dir_name" name="new_dir_name" required>
+        <button type="submit">Utwórz katalog</button>
+    </form>
+
+    <form method="post">
         <ul>
             {% if current_path %}
                 <li>

@@ -23,6 +23,18 @@ def index(req_path):
     # Listowanie katalogu
     files = os.listdir(absolute_path)
 
+    # Tworzenie nowego katalogu
+    if request.method == 'POST' and 'new_dir_name' in request.form:
+        new_dir_name = request.form['new_dir_name']
+        if new_dir_name:
+            new_dir_path = os.path.join(absolute_path, new_dir_name)
+            try:
+                os.mkdir(new_dir_path)
+            except Exception as e:
+                print(e)
+        return redirect(url_for('index', req_path=req_path))
+
+
     # renderowanie widoku
     return render_template('index.html', files=files, current_path=req_path)
 
