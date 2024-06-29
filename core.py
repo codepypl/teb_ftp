@@ -48,17 +48,15 @@ def index(req_path):
 
     # Pobieranie plików
     if request.method == 'POST' and 'download_files' in request.form:
-        selected_files = request.files.getlist('download_files')
+        selected_files = request.form.getlist('selected_files')
         if selected_files:
             memory_file = io.BytesIO()
             with zipfile.ZipFile(memory_file, 'w') as zf:
                 for file_name in selected_files:
-                    file_path = os.path.join(absolute_path,file_name)
+                    file_path = os.path.join(absolute_path, file_name)
                     zf.write(file_path, os.path.basename(file_path))
             memory_file.seek(0)
-            return send_file(memory_file, mimetype='application/zip',
-                             as_attachment=True,
-                             download_name='packed_file.zip')
+            return send_file(memory_file, download_name='files.zip', as_attachment=True)
 
 
     # renderowanie widoku
