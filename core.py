@@ -6,6 +6,7 @@ import io
 app = Flask(__name__)
 app.secret_key = 'Das5ahec#23a'
 
+
 BASE_PATH = ''  # ZMIEŃ , podaj ścieżkę do folderu systemowego, który skrypt będzie przeglądać
 
 
