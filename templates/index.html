@@ -31,7 +31,9 @@
             {% endif %}
             {% for file in files %}
                 <li>
-                    <input type="checkbox" name="selected_files" value="{{ file }}">
+                    <label>
+                        <input type="checkbox" name="selected_files" value="{{ file }}">
+                    </label>
                     {% if '.' in file %}
                         <img src="{{ url_for('static', filename='icons/file.png') }}" alt="File">
                         <a href="{{ url_for('index', req_path=current_path + '/' + file) }}">{{ file }}</a>
@@ -43,6 +45,7 @@
             {% endfor %}
         </ul>
         <button type="submit" name="download_files">Pobierz zaznaczone pliki</button>
+        <button type="submit" name="delete_files">Usuń zaznaczone pliki</button>
     </form>
 </body>
 </html>
