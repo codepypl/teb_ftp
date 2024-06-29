@@ -1,0 +1,35 @@
+#drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#drop-area.highlight {
+    border-color: purple;
+}
+
+#drop-area p {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #888;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li.error {
+    color: red;
+}
+
+li img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
